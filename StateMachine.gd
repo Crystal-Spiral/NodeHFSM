@@ -54,12 +54,12 @@ func _physics_process(delta: float) -> void:
 ###################################################################################################
 
 #	Attempts to change the current state to a new one. Can be blocked by the current state, unless
-#	force is flagged.
-func change_state(new : Variant, force := false, use_fallback := true) -> bool:
+#	force is flagged. If it fails to find the state, it'll change to fallback if not null
+func change_state(new : Variant, force := false, fallback := fallback_State) -> bool:
 	new = get_state_node(new) as State;
 	if new == null:
-		if use_fallback:
-			return change_state(fallback_State, force);
+		if fallback:
+			return change_state(fallback, force);
 		return false;
 
 	if not force and not current_state._can_interrupt(context):
@@ -79,6 +79,39 @@ func change_state(new : Variant, force := false, use_fallback := true) -> bool:
 
 	return true;
 
+
+#	Dynamically add a state to the machine tree
+func add_state(new : State, location : String) -> bool:
+	var par = get_node(location);
+	if not par:
+		return false;
+	if new.get_parent():
+		new.reparent(par)
+	else:
+		par.add_child(new);
+	return true;
+
+
+#	Dynamically remove a state from the tree. If its the current state, go to the fallback
+func remove_state(state : Variant, fallback := fallback_State, force := false) -> bool:
+	state = get_state_node(state) as State;
+	if not state:
+		return false;
+	
+	if not force and not state._can_remove(context):
+		return false;
+
+	if state == current_state:
+		change_state(fallback);
+	state.queue_free();
+	return true;
+
+
+
+
+###################################################################################################
+#	HELPERS
+###################################################################################################
 
 ##	Get a state node from a variant value
 func get_state_node(val : Variant) -> State:

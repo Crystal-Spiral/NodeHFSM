@@ -38,20 +38,25 @@ func _tick(context : StateContext) -> void:
 		parent._tick(context);
 
 
-##	Called when the state is made into the current state
+##	Called when the state is made into the current state.
 func _enter(context : StateContext ) -> void:
 	if parent:
 		parent._enter(context);
 
 
-##	Called when the state is being booted from being the current state
+##	Called when the state is being booted from being the current state.
 func _exit(context : StateContext ) -> void:
 	if parent:
 		parent._exit(context);
 
 
-##	Called when attempting to change from this state. Allows for custom checks per state;
+##	Called when attempting to change from this state. Allows for custom checks per state.
 func _can_interrupt(context : StateContext) -> bool:
 	if parent:
 		parent._can_interrupt(context);
+	return true;
+
+
+##	Used for realtime removing of tree states. We dont want to propogate this down. Use carefully.
+func _can_remove(context : StateContext) -> bool:
 	return true;
