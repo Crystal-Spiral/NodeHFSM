@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://by5y5x3mk0fxd"
-path="res://.godot/imported/state_context.svg-72592a0dd03bfb0a9f0e8486e9dc096c.ctex"
+path="res://.godot/imported/state_context.svg-ce69a06a5e566049aa14569818feda5f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/NodeHFSM/state_context.svg"
-dest_files=["res://.godot/imported/state_context.svg-72592a0dd03bfb0a9f0e8486e9dc096c.ctex"]
+source_file="res://Code/NodeHFSM/state_context.svg"
+dest_files=["res://.godot/imported/state_context.svg-ce69a06a5e566049aa14569818feda5f.ctex"]
 
 [params]
 
