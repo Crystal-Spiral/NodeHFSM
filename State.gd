@@ -1,4 +1,4 @@
-@icon("State.svg")
+@icon("state.svg")
 class_name State
 extends Node
 
@@ -10,7 +10,7 @@ extends Node
 ##	States have no concept of the overall State Machine
 
 
-#	Reference to this state's parent node (if applicable). Searched for during _ready();
+##	Reference to this state's parent node (if applicable). Searched for during _ready();
 var parent : State = null;
 
 
@@ -18,6 +18,7 @@ var parent : State = null;
 #	ENGINE CALLBACKS
 ###################################################################################################
 
+## Get the parent State
 func _ready() -> void:
 	# Fetch the state's parent (if applicable)
 	var par = get_parent()
@@ -60,3 +61,13 @@ func _can_interrupt(context : StateContext) -> bool:
 ##	Used for realtime removing of tree states. We dont want to propogate this down. Use carefully.
 func _can_remove(context : StateContext) -> bool:
 	return true;
+
+
+## Called when this state is pushed underneath a new stacked state
+func _pause(context : StateContext) -> void:
+	_exit(context);
+
+
+## Called when this state is popped back to the top of a state stack
+func _resume(context : StateContext) -> void:
+	_enter(context);

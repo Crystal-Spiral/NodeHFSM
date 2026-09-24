@@ -1,8 +1,10 @@
 # NodeHFSM
 
-Node Based Heirachical Finite State Machine implementation. Packaged as a plugin for easy drag and drop between projects.
+Node Based Heirachical Finite State Machine implementation.
 
-Provides just the starting building blocks. Basic and unoptimised as all heck, but will get you started quickly. Probably shouldn't use in anything beyond basic prototyping.
+Provides just the starting building blocks.
+Basic and unoptimised as all heck, but will get you started quickly.
+Probably shouldn't use in anything beyond basic prototyping.
 
 
 ### Usage
@@ -13,7 +15,9 @@ Provides just the starting building blocks. Basic and unoptimised as all heck, b
 
 The State class provides enter, exit, and tick functions.
 They also have an optional can interupt state for blocking transitions
-When states have parents, their functions will be called unless overriten.
+When states have parent state nodes, their functions will be called unless overriten.
+
+Also includes a stack based state machine
 
 
 ---

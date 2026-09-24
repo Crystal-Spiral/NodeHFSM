@@ -1,25 +1,25 @@
-@icon("StateMachine.svg")
+@icon("state_machine.svg")
 class_name StateMachine
 extends Node
 
 ##	Root node of a tree. Responcible for tracking and performing the active state
 ##	Data meant for states themselves is handled by StateContext
 
-#	Shortcut to the node this machine acts on. Defaults to owner on _ready
+##	Shortcut to the node this machine acts on. Defaults to owner on _ready
 @export var host : Node;
-#	The starting state this machine should run
+##	The starting state this machine should run
 @export var inital_state : State;
-#	A safety state if fetching a state fails during a change (optional)
+##	A safety state if fetching a state fails during a change (optional)
 @export var fallback_State : State;
 
-#	The active state;
+##	The active state;
 var current_state : State;
-#	The shared memory pool between states;	
+##	The shared memory pool between states;	
 var context : StateContext;
 
-#	Emitted on a successful state change
+##	Emitted on a successful state change
 signal state_changed(new : State, old : State);
-#	Emitted when the current state blocks a change attempt
+##	Emitted when the current state blocks a change attempt
 signal state_change_blocked(blocked : State, by : State);
 
 
@@ -27,6 +27,7 @@ signal state_change_blocked(blocked : State, by : State);
 #	ENGINE CALLBACKS
 ###################################################################################################
 
+##	Start up the machine
 func _ready() -> void:
 	#	Setup machine and context
 	current_state = inital_state;
@@ -41,6 +42,7 @@ func _ready() -> void:
 	current_state._enter(context);
 
 
+## Update the machine for each tick
 func _physics_process(delta: float) -> void:
 	#	Update the context and tick the current state
 	context.delta = delta;
@@ -53,8 +55,8 @@ func _physics_process(delta: float) -> void:
 #	STATE MANAGEMENT
 ###################################################################################################
 
-#	Attempts to change the current state to a new one. Can be blocked by the current state, unless
-#	force is flagged. If it fails to find the state, it'll change to fallback if not null
+##	Attempts to change the current state to a new one. Can be blocked by the current state, unless
+##	force is flagged. If it fails to find the state, it'll change to fallback if not null
 func change_state(new : Variant, force := false, fallback := fallback_State) -> bool:
 	new = get_state_node(new) as State;
 	if new == null:
@@ -80,7 +82,7 @@ func change_state(new : Variant, force := false, fallback := fallback_State) -> 
 	return true;
 
 
-#	Dynamically add a state to the machine tree
+##	Dynamically add a state to the machine tree
 func add_state(new : State, location : String) -> bool:
 	var par = get_node(location);
 	if not par:
@@ -92,7 +94,7 @@ func add_state(new : State, location : String) -> bool:
 	return true;
 
 
-#	Dynamically remove a state from the tree. If its the current state, go to the fallback
+##	Dynamically remove a state from the tree. If its the current state, go to the fallback
 func remove_state(state : Variant, fallback := fallback_State, force := false) -> bool:
 	state = get_state_node(state) as State;
 	if not state:
