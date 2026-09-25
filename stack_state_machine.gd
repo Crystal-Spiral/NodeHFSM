@@ -18,7 +18,19 @@ signal state_replaced(new : State, old : State);
 ##	Emited when anything changes. Useful for anything that wants to monitor but doesnt care what
 signal changed()
 
- 
+
+###################################################################################################
+#	ENGINE CALLBACKS
+###################################################################################################
+
+##	Start up the machine
+func _ready() -> void:
+	super._ready()
+	context._replace_func = replace_state
+	context._push_func = push_state
+	context._pop_func = pop_state
+
+
 ###################################################################################################
 #	STACK MANAGEMENT
 ###################################################################################################

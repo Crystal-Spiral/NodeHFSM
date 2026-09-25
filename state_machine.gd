@@ -33,7 +33,7 @@ func _ready() -> void:
 	current_state = inital_state;
 	context = StateContext.new();
 	context.host = host;
-	context.change_state = change_state;
+	context.change_func = change_state;
 
 	# Wait for all nodes in tree to ready before starting JIC
 	await owner.ready;
@@ -79,6 +79,7 @@ func change_state(new : Variant, force := false, fallback := fallback_State) -> 
 	context.state_ticks = 0;
 	context.state_time = 0.0;
 
+	state_changed.emit(current_state, old);
 	return true;
 
 
